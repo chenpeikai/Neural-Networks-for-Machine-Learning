@@ -96,13 +96,14 @@ function [w] = update_weights(neg_examples, pos_examples, w_current)
 % Inputs:
 %   neg_examples - The num_neg_examples x 3 matrix for the examples with target 0.
 %       num_neg_examples is the number of examples for the negative class.
-%   pos_examples- The num_pos_examples x 3 matrix for the examples with target 1.
+%   pos_examples- The num_pos_examples x w3 matrix for the examples with target 1.
 %       num_pos_examples is the number of examples for the positive class.
 %   w_current - A 3-dimensional weight vector, the last element is the bias.
 % Returns:
 %   w - The weight vector after one pass through the dataset using the perceptron
 %       learning rule.
 %%
+rate = 1;
 w = w_current;
 num_neg_examples = size(neg_examples,1);
 num_pos_examples = size(pos_examples,1);
@@ -112,6 +113,7 @@ for i=1:num_neg_examples
     activation = this_case*w;
     if (activation >= 0)
         %YOUR CODE HERE
+        w = w - rate*x;
     end
 end
 for i=1:num_pos_examples
@@ -120,6 +122,7 @@ for i=1:num_pos_examples
     activation = this_case*w;
     if (activation < 0)
         %YOUR CODE HERE
+        w = w + rate*x;
     end
 end
 
